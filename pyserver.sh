@@ -1,1 +1,0 @@
-python python_server.py $1 $2
