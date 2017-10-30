@@ -1,6 +1,6 @@
 import socket
 import sys
-from threading import Thread
+
 
 def connect(addr, port):
     print("INICIALIZANDO SOCKET ...")
@@ -23,7 +23,7 @@ def connect(addr, port):
     try:
         hostIp = socket.gethostbyname(addr)
         print("O IP PARA " + addr + " É " + hostIp + ". ESTABELECENDO CONEXÃO ...")
-        client.connect((hostIp,port))
+        client.connect((hostIp, port))
     except socket.gaierror:
         print("NÃO FOI POSSÍVEL ENCONTRAR O ENDEREÇO IP PARA " + addr + "!")
         sys.exit()
@@ -31,16 +31,18 @@ def connect(addr, port):
     msg = "GET /" + dir + " HTTP/1.1\nHost: " + addr + "\n\n"
     msg = msg.encode('utf-8')
     client.sendall(msg)
-    rec = client.recv(1024).decode('utf-8')
+    rec = client.recv(10000).decode('utf-8')
     print(rec)
 
     print("FECHANDO CONEXÃO!")
     client.close()
 
 
-def run(addr,port=80):
-    connect(addr,port)
+def run(addr, port=80):
+    connect(addr, port)
 
-thread = []
-thread_1 = Thread(target=run, args=('http://dcomp.ufsj.edu.br/~fls/redes/tp1.txt', 80))
-thread_1.start()
+
+if sys.argv[2]:
+    run(sys.argv[1], sys.argv[2])
+else:
+    run(sys.argv[1])
