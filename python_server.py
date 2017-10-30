@@ -22,12 +22,12 @@ def run_server(file, port):
 
     while True:
         id, client = srv.accept()
-        thread = Thread(target=connect, args=(id, file))
+        thread = Thread(target=connect, args=(id, file, port))
         thread.start()
         print("NOVA CONEXÃO!")
 
 
-def connect(id, file):
+def connect(id, file, port):
     now = datetime.now()
     stamp = mktime(now.timetuple())
 
@@ -90,7 +90,7 @@ def connect(id, file):
                            "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"><html><head><title>404 Not Found</title>" \
                            "</head><body><h1>Not Found</h1>" \
                            "<p>The requested URL " + req.partition("/")[2] + " was not found on this server.</p><hr>" \
-                           "<address>" + platform.system() + "/" + platform.release() + " Server at localhost Port 80</address>" \
+                           "<address>" + platform.system() + "/" + platform.release() + " Server at localhost Port " + str(port) + "</address>" \
                            "</body></html>"
                 id.send(response.encode('utf-8'))
 

@@ -35,13 +35,13 @@ def connect(addr, port):
             "User-Agent: Mozilla/5.0(X11;Linux x86_64) AppleWebKit/537.36(KHTML, like Gecko) Chrome/62.0.3202.75Safari/537.36\n" \
             "Upgrade-Insecure-Requests: 1\n" \
             "Accept: text/html, application/xhtml + xml, application/xml;q=0.9, image/webp, image/apng, */*;q=0.8\n" \
-            "Accept-Encoding: gzip, deflate, br\n" \
             "Accept-Language: pt-BR, pt;q=0.9, en-US;q=0.8, en;q=0.7\n" \
             "\n\n"
     msg = msg.encode('utf-8')
     client.sendall(msg)
     code = 'latin-1'
     recv = client.recv(1024).decode(code)
+
     print(recv)
     while len(recv) > 0:
         recv = client.recv(1024).decode(code)
