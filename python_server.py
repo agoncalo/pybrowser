@@ -7,12 +7,14 @@ from datetime import datetime
 from time import mktime
 from threading import Thread
 
-
 def run_server(file, port):
+    port = int(port)
     hostIp = ''
 
     srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    addr = srv.bind((hostIp, port))
 
     print("SOCKET CRIADO PARA A PORTA " + str(port) + "!")
 
@@ -97,10 +99,14 @@ def connect(id, file):
 
 
 def run(filename, port=8080):
+    if not filename.endswith('/'):
+        filename = filename + '/'
     run_server(filename, port)
 
 
-if sys.argv[2]:
+if len(sys.argv) == 3:
     run(sys.argv[1], sys.argv[2])
-else:
+elif len(sys.argv) != 1:
     run(sys.argv[1])
+else:
+    run('Dir')
